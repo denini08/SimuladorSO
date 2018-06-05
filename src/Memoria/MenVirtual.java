@@ -18,5 +18,18 @@ public class MenVirtual {
 		return paginaVirtual[posicao];
 	}
 	
+	public void mostrarTudoMenVirutal() {
+		System.out.println("/----/TUDO DA MenVirutal /---/");
+		for(int i = 0; i < this.paginaVirtual.length ; i++) {
+			System.out.print("posicao: " + i + " = "); 
+			if(paginaVirtual[i] == null) {
+				System.out.println(" null");
+				continue;
+			}
+			paginaVirtual[i].printPagina();	
+			
+		}
+		System.out.println();
+	}
 
 }

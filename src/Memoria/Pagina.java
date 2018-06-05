@@ -27,10 +27,6 @@ public class Pagina {
 	
 	
 	
-	
-	
-	
-	
 	public void setReferenciada(boolean status) {
 		this.referenciada =status ;
 	}
@@ -69,6 +65,13 @@ public class Pagina {
 			return false;
 		}
 		return true;
+	}
+	
+	public void printPagina() {
+		System.out.println("referenciada: " + referenciada + "\n" 
+						+  "modificada: " + modificada  + "\n"
+						+   "presente: " + presente + "\n"
+						+ 	"molduraPagina: "+ molduraPagina);
 	}
 	
 }

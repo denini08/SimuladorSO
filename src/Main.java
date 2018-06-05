@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		final int QUANTIDADE_THREADS = 2;
+		final int QUANTIDADE_THREADS = 1;
 		final int TAMANHO_RAM = 8;
 		
 	
@@ -20,7 +20,9 @@ public class Main {
 				new Processo(i, mmu).start();
 			}
 			
-			
+			//MV.mostrarTudoMenVirutal();
+			//MenFisica.mostrarTudoRam();
+			 
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

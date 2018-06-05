@@ -22,14 +22,16 @@ public class MMU {
 		
 		if(t[1].contains("R")) {
 			leitura( Integer.parseInt(t[0]));
-			return;
+		}else {
+			escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
 		}
 		
-		escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
+		MemoriaVirtual.mostrarTudoMenVirutal();
+		MemoriaFisica.mostrarTudoRam();
 		
 	}
 
-	private void escrita(int indiceVirtual, int escrita) {
+	private synchronized void escrita(int indiceVirtual, int escrita) {
 		Integer posicaoNaRam = null;
 		System.out.println("escrevendo:" + escrita + " na posicao: " + indiceVirtual);
 		
@@ -44,7 +46,11 @@ public class MMU {
 				MemoriaFisica.setValor(posicaoNaRam, escrita);
 				LRU.adicionarRecente(indiceVirtual);		//ALGORITMO, AQUI FOI REFERENCIADO - IR PARA O FINAL DA LISTA
 			}else { //CASO O VALOR NAO ESTEJA NA MEMORIA RAM
-				System.out.println("O VALOR NAO ESTEJA NA MEMORIA RAM");
+				System.out.println("O VALOR NAO ESTA NA MEMORIA RAM");
+				this.liberarEspacoRam();
+				this.HDparaRAM(indiceVirtual);
+	
+				LRU.adicionarRecente(indiceVirtual);
 				
 			}
 			
@@ -53,15 +59,22 @@ public class MMU {
 			System.out.println(" PAGINA AINDA NAO EXISTA, FAZENDO UMA NOVA INSERCAO");
 			posicaoNaRam = MemoriaFisica.getIndiceLivre();
 			
-			if(posicaoNaRam != null) { 		//SE EXISTE ESPACO LIVRE NA RAM!!!
+			if(posicaoNaRam != null) { 		// EXISTE ESPACO LIVRE NA RAM!!!
 				MemoriaVirtual.getPagina(indiceVirtual).setMolduraPagina(posicaoNaRam);
 				MemoriaVirtual.getPagina(indiceVirtual).setPresente(true);
 				MemoriaFisica.setValor(posicaoNaRam, escrita);
 				LRU.adicionarRecente(indiceVirtual);	
 				
 			} else { //CASO NAO EXISTA MEMORIA LIVRE PARA FAZER UMA INSERCAO
-				System.out.println("NAO EXISTA MEMORIA LIVRE PARA FAZER UMA INSERCAO");
-				//fazer valer a pena
+				System.out.println("NAO EXISTE MEMORIA LIVRE PARA FAZER UMA INSERCAO");
+				this.liberarEspacoRam();
+				posicaoNaRam = MemoriaFisica.getIndiceLivre();
+				MemoriaVirtual.getPagina(indiceVirtual).setMolduraPagina(posicaoNaRam);
+				MemoriaVirtual.getPagina(indiceVirtual).setPresente(true);
+				MemoriaFisica.setValor(posicaoNaRam, escrita);
+				
+				LRU.adicionarRecente(indiceVirtual);	
+				
 			}
 						
 		}
@@ -73,6 +86,10 @@ public class MMU {
 		//LRU.mostrarTudoArray();
 	}
 
+	
+
+
+
 	private void leitura(int indiceVirtual) {
 		System.out.println("Leitura em :" + indiceVirtual );
 		Pagina leitura = this.MemoriaVirtual.getPagina(indiceVirtual);
@@ -83,8 +100,10 @@ public class MMU {
 				leitura.setReferenciada(true);
 				LRU.adicionarRecente(indiceVirtual);
 			}else { //caso estaja ausente (esta no HD).
+				this.liberarEspacoRam();
+				this.HDparaRAM(indiceVirtual);
+				this.leitura(indiceVirtual);
 				
-				//chamar algoritmo para pegar devolta do hd e colocar na ram:
 				
 			}
 		}else {
@@ -93,5 +112,35 @@ public class MMU {
 		
 	}
 	
+	private void liberarEspacoRam() {
+		Integer IndicePagina, IndiceLivreHD, IndiceRam, valorRam ;
+		IndicePagina = LRU.removerUm();
+		System.out.println("foi escolhido:" + IndicePagina);
+		IndiceLivreHD = HD.getIndiceLivreHD();
+		
+		IndiceRam = MemoriaVirtual.getPagina(IndicePagina).getMolduraPagina();
+		MemoriaVirtual.getPagina(IndicePagina).setMolduraPagina(IndiceLivreHD);
+		MemoriaVirtual.getPagina(IndicePagina).setPresente(false);
+		valorRam = MemoriaFisica.getValor(IndiceRam);
+		MemoriaFisica.setValor(IndiceRam, null);
+		HD.setValorHD(IndiceLivreHD, valorRam);
+		
+		System.out.println("A variavel que estava na posicao: "+ IndiceRam +  " na pagina " + IndicePagina + " foi para o HD na posicao oy" + IndiceLivreHD);
+	}
+	
+	
+	private void HDparaRAM(int indiceVirtual) {
+		Integer molduraHD, valorHD, indiceLivreRAM;
+
+		molduraHD = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina();
+		valorHD = HD.getValorHD(molduraHD);
+		HD.setValorHD(molduraHD, null);
+		
+		indiceLivreRAM = MemoriaFisica.getIndiceLivre();
+		MemoriaFisica.setValor(indiceLivreRAM, valorHD);
+		MemoriaVirtual.getPagina(indiceVirtual).setMolduraPagina(indiceLivreRAM);
+		MemoriaVirtual.getPagina(indiceVirtual).setPresente(true);
+		
+	}
 
 }

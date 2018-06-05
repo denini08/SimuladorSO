@@ -24,7 +24,9 @@ public class Processo extends Thread{
 	public void run() {
 		
 		//String[] s = {"4-R", "5-R", "0-R", "4-W-2", "5-R", "7-W-18", "4-W-12"};
-		String[] s = {"1-W-7", "2-W-1", "1-R","6-W-55", "2-R", "5-W-77"};
+		String[] s = {"1-W-7", "2-W-1", "1-R","6-W-55", "2-R", "5-W-77", "4-W-75"};
 		enviar(s);
+		
+		
 	}
 }
