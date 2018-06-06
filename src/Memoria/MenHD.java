@@ -26,6 +26,14 @@ public class MenHD {
 		System.out.println("NAO conseguiu espaco no HD");
 		return null;
 	}
-
+	
+	public void mostrarTudoHD() {
+		System.out.println("/----/TUDO DO HD /---/");
+		for(int i = 0; i < this.memoriaHD.length ; i++) {
+			if(memoriaHD[i] == null) continue;
+			System.out.println("posicao: " + i + " = " + memoriaHD[i]);	
+			
+		}
+	}
 
 }

@@ -28,6 +28,7 @@ public class MMU {
 		
 		MemoriaVirtual.mostrarTudoMenVirutal();
 		MemoriaFisica.mostrarTudoRam();
+		HD.mostrarTudoHD();
 		
 	}
 
@@ -94,6 +95,11 @@ public class MMU {
 		System.out.println("Leitura em :" + indiceVirtual );
 		Pagina leitura = this.MemoriaVirtual.getPagina(indiceVirtual);
 		
+		
+		if(leitura.getMolduraPagina() == null) {
+			System.out.println("LEITURA SENDO REALIZADA EM UMA PAGINA QUE NAO EXISTE ");
+			return;
+		}
 		if(leitura != null) {
 			if(leitura.isPresente()) {
 				System.out.println("Indece:" + indiceVirtual + " valor: " + this.MemoriaFisica.getValor(leitura.getMolduraPagina()));
@@ -106,8 +112,6 @@ public class MMU {
 				
 				
 			}
-		}else {
-			System.out.println("FUDEO leitura= null ");
 		}
 		
 	}

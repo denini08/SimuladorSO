@@ -27,6 +27,7 @@ public class MenVirtual {
 				continue;
 			}
 			paginaVirtual[i].printPagina();	
+			System.out.println();
 			
 		}
 		System.out.println();
