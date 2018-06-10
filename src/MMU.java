@@ -26,9 +26,10 @@ public class MMU {
 			escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
 		}
 		
-		MemoriaVirtual.mostrarTudoMenVirutal();
-		MemoriaFisica.mostrarTudoRam();
-		HD.mostrarTudoHD();
+		//PARA TESTE:
+		//MemoriaVirtual.mostrarTudoMenVirutal();
+		//MemoriaFisica.mostrarTudoRam();
+		//HD.mostrarTudoHD();
 		
 	}
 

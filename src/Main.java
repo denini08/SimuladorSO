@@ -3,17 +3,17 @@ import Memoria.MenRam;
 import Memoria.MenVirtual;
 
 public class Main {
-
+	final static int QUANTIDADE_THREADS = 1;
 	public static void main(String[] args) {
 		
-		final int QUANTIDADE_THREADS = 1;
+		
 		final int TAMANHO_RAM = 8;
 		
 	
 		MenRam MenFisica = new MenRam(TAMANHO_RAM/2);
 		MenVirtual MV = new MenVirtual(TAMANHO_RAM);
 		MenHD HD = new MenHD();
-	
+		Status status = new Status(MenFisica, MV, HD);
 		MMU mmu = new MMU(MV,MenFisica,HD);
 		
 		String[] s = {"1-W-7", "2-W-1", "1-R","6-W-55", "2-R", "5-W-77", "4-W-75", "3-W-58","6-R"};
@@ -25,7 +25,7 @@ public class Main {
 			//for(int i=1; i <= QUANTIDADE_THREADS; i++) {
 				//new Processo(0, mmu, d).start();
 				//new Processo(1, mmu, p).start();
-				new Processo(2, mmu, m).start();
+				new Processo(2, mmu, m, status).start();
 			//}
 			
 			//MV.mostrarTudoMenVirutal();

@@ -4,11 +4,13 @@ public class Processo extends Thread{
 	private int id;
 	private MMU mmu;
 	private String[] comandos;
+	private Status status;
 	
-	public Processo(int id_, MMU mmu_, String [] comando) {
+	public Processo(int id_, MMU mmu_, String [] comando, Status s) {
 		this.id = id_;
 		this.mmu = mmu_;
 		this.comandos = comando;
+		this.status = s;
 	}
 	
 	public void enviar() {
@@ -22,6 +24,9 @@ public class Processo extends Thread{
 			}
 			System.out.println("Processo: " + this.id + " ACORDOU!@##@!!");
 		}
+		System.out.println("Processo: " + this.id + " Acabou\n");
+		status.status_fim();
+		
 	}
 	
 	public void run() {
