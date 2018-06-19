@@ -2,7 +2,7 @@ package Memoria;
 
 public class MenHD {
 	private Integer[] memoriaHD;
-	private final int tamanhoHD = 10;
+	private final int tamanhoHD = 55;
 	
 	public MenHD() {
 		memoriaHD =new Integer[tamanhoHD];

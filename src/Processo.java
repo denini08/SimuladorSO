@@ -15,14 +15,16 @@ public class Processo extends Thread{
 	
 	public void enviar() {
 		for(String g : comandos) {
+			//System.out.println("Processo: " + this.id + " ACORDOU!@##@!!");
 			mmu.receberComando(g,this.id);
+			System.out.println(g);
 			try {
 				System.out.println("Processo: " + this.id + " Dormiu\n\n");
-				Thread.sleep(this.id * 1500l);
+				Thread.sleep(this.id ); //* 1500l
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
-			System.out.println("Processo: " + this.id + " ACORDOU!@##@!!");
+			
 		}
 		System.out.println("Processo: " + this.id + " Acabou\n");
 		status.status_fim();

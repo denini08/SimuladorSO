@@ -23,7 +23,12 @@ public class MMU {
 		if(t[1].contains("R")) {
 			leitura( Integer.parseInt(t[0]));
 		}else {
-			escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
+			try {
+				escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
+			}catch (Exception e) {
+				System.out.println("-****----****--ERRRRRROO s: " + s);
+			}
+			
 		}
 		
 		//PARA TESTE:
