@@ -17,7 +17,7 @@ public class Status {
 	public  void status_fim() {
 		this.contador++;
 		if(contador == Main.QUANTIDADE_THREADS) {
-			System.out.println("Status FInal papai");
+			System.out.println("Status Final:");
 			MV.mostrarTudoMenVirutal();
 			MenFisica.mostrarTudoRam();
 			HD.mostrarTudoHD();
