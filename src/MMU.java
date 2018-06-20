@@ -37,10 +37,10 @@ public class MMU {
 		System.out.println("escrevendo:" + escrita + " na posicao: " + indiceVirtual);
 		
 		
-		if(MemoriaVirtual.getPagina(indiceVirtual).existe()) {	//CASO A PAGINA JA EXISTA, FAZENDO UMA ATUALIZACAO			//se a pagina exite
+		if(MemoriaVirtual.getPagina(indiceVirtual).existe()) {	//CASO A PAGINA JA EXISTA, FAZENDO UMA ATUALIZACAO	//se a pagina existe
 			System.out.println(" A PAGINA JA EXISTA, FAZENDO UMA ATUALIZACAO");
 			
-			if(MemoriaVirtual.getPagina(indiceVirtual).isPresente()) {		//se a pagina ja esta na Ram
+			if(MemoriaVirtual.getPagina(indiceVirtual).isPresente()) {		//se a pagina ja esta na RAM
 				System.out.println("a variavel ja esta na Ram");
 				posicaoNaRam = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina();	//pega a posicao q o valor esta na ram
 				MemoriaVirtual.getPagina(indiceVirtual).setModificada(true); 				//AINDA EXISTE DUVIDA AQUI,
