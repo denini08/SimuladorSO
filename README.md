@@ -2,8 +2,10 @@
 Simulação algoritmo de paginação LRU
 
 README - SO
+
 SIMULADOR DE ALGORITMO LRU
-Caminho do código:FAB.DE ENTRADAS-> MAIN -> PROCESSO -> MMU-> LISTA-> STATUS
+
+Caminho do código: FAB.DE ENTRADAS-> MAIN -> PROCESSO -> MMU-> LISTA-> STATUS
 
 **TIPOS DE MEMÓRIA UTILIZADOS NO PROGRAMA:**
 - MemFis: simula a memória RAM do SO, é um array 							
