@@ -6,9 +6,9 @@ SIMULADOR DE ALGORITMO LRU
 Caminho do código:FAB.DE ENTRADAS-> MAIN -> PROCESSO -> MMU-> LISTA-> STATUS
 
 **TIPOS DE MEMÓRIA UTILIZADOS NO PROGRAMA:**
-*MemFis: simula a memória RAM do SO, é um array 							
-*MemVirt: array de páginas com o dobro de espaços da memória física //CONTÉM: 
-*MemHD: Um array que simula um disco rígido de um computador 
++MemFis: simula a memória RAM do SO, é um array 							
++MemVirt: array de páginas com o dobro de espaços da memória física //CONTÉM: 
++MemHD: Um array que simula um disco rígido de um computador 
 
 **O QUE É A MMU E COMO FUNCIONA?**
 	Memory Manager Unit - unidade gerenciadora de memória. 
