@@ -24,7 +24,7 @@ public class Lista {
 		System.out.println();
 	}
 	
-	public Integer removerUm() {		//remove o menos recentimente usado
+	public Integer removerUm() {		//remove o menos recentemente usado
 		return ListaEncadeada.remove(0);
 	}
 }
