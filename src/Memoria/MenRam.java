@@ -7,8 +7,8 @@ public class MenRam {
 		memoriaRam = new Integer[tamanho];
 	}
 	
-	public Integer getValor(int indece) {
-		return this.memoriaRam[indece];
+	public Integer getValor(int indice) {
+		return this.memoriaRam[indice];
 	}
 	
 	public void setValor(int indice, Integer valor) {
