@@ -106,7 +106,7 @@ public class MMU {
 				System.out.println("Indece:" + indiceVirtual + " valor: " + this.MemoriaFisica.getValor(leitura.getMolduraPagina()));
 				leitura.setReferenciada(true);
 				LRU.adicionarRecente(indiceVirtual);
-			}else { 										//caso estaja ausente (esta no HD).
+			}else { 										//caso esteja ausente (esta no HD).
 				this.liberarEspacoRam();
 				this.HDparaRAM(indiceVirtual);
 				this.leitura(indiceVirtual);
