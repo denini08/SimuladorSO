@@ -6,13 +6,13 @@ public class Lista {
 	
 	
 	public void adicionarRecente(Integer novo) {
-		System.out.println("A lista foi alterada papai /--/");
+		System.out.println("A lista foi alterada /--/");
 		this.removerEle(novo);	//remover ele da lista caso ja esteja
 		ListaEncadeada.add(novo); //adicionar no fim
 		this.mostrarTudoArray();
 	}
 	
-	private void removerEle(Integer elemento) {
+	private void removerEle(Integer elemento) {  
 		ListaEncadeada.remove(elemento);
 	}
 	
@@ -24,7 +24,7 @@ public class Lista {
 		System.out.println();
 	}
 	
-	public Integer removerUm() {
+	public Integer removerUm() {		//remove o menos recentimente usado
 		return ListaEncadeada.remove(0);
 	}
 }

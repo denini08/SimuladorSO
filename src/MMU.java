@@ -2,7 +2,7 @@ import Memoria.MenHD;
 import Memoria.MenRam;
 import Memoria.MenVirtual;
 import Memoria.Pagina;
-
+//esse novo
 public class MMU {
 	private MenRam MemoriaFisica;
 	private MenVirtual MemoriaVirtual;
@@ -16,24 +16,18 @@ public class MMU {
 		
 	}
 	
-	public synchronized void  receberComando(String s, int id) {
-		System.out.println("Requisição Processo: " + id);
+	public synchronized  void  receberComando(String s, int id) {
+		System.out.println("Processo: " + id);
 		String[] t = s.split("-");
 		
 		if(t[1].contains("R")) {
 			leitura( Integer.parseInt(t[0]));
 		}else {
-			try {
-				escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
-			}catch (Exception e) {
-				System.out.println("-****----****--ERRRRRROO s: " + s);
-			}
-			
+			escrita(Integer.parseInt(t[0]), Integer.parseInt(t[2]));
 		}
 		
-		//PARA TESTE:
 		//MemoriaVirtual.mostrarTudoMenVirutal();
-		//MemoriaFisica.mostrarTudoRam();
+	//	MemoriaFisica.mostrarTudoRam();
 		//HD.mostrarTudoHD();
 		
 	}
@@ -56,7 +50,8 @@ public class MMU {
 				System.out.println("O VALOR NAO ESTA NA MEMORIA RAM");
 				this.liberarEspacoRam();
 				this.HDparaRAM(indiceVirtual);
-	
+				int posicao_ram = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina()  ;
+				MemoriaFisica.setValor(posicao_ram, escrita);						//escrevendo valor novo
 				LRU.adicionarRecente(indiceVirtual);
 				
 			}
@@ -102,16 +97,16 @@ public class MMU {
 		Pagina leitura = this.MemoriaVirtual.getPagina(indiceVirtual);
 		
 		
-		if(leitura.getMolduraPagina() == null) {
+		if(leitura.getMolduraPagina() == null) {			//tentando ler pagina NULA
 			System.out.println("LEITURA SENDO REALIZADA EM UMA PAGINA QUE NAO EXISTE ");
 			return;
 		}
 		if(leitura != null) {
-			if(leitura.isPresente()) {
+			if(leitura.isPresente()) {						//ela esta na ram
 				System.out.println("Indece:" + indiceVirtual + " valor: " + this.MemoriaFisica.getValor(leitura.getMolduraPagina()));
 				leitura.setReferenciada(true);
 				LRU.adicionarRecente(indiceVirtual);
-			}else { //caso estaja ausente (esta no HD).
+			}else { 										//caso estaja ausente (esta no HD).
 				this.liberarEspacoRam();
 				this.HDparaRAM(indiceVirtual);
 				this.leitura(indiceVirtual);
@@ -124,33 +119,34 @@ public class MMU {
 	
 	private void liberarEspacoRam() {
 		Integer IndicePagina, IndiceLivreHD, IndiceRam, valorRam ;
-		IndicePagina = LRU.removerUm();
-		System.out.println("foi escolhido:" + IndicePagina);
-		IndiceLivreHD = HD.getIndiceLivreHD();
+		IndicePagina = LRU.removerUm();												//escolhendo quem vai pro HD
+		System.out.println("O algoritmo LRU escolheu a pagina:" + IndicePagina);
+		IndiceLivreHD = HD.getIndiceLivreHD();										//pegando indice livre no HD
 		
-		IndiceRam = MemoriaVirtual.getPagina(IndicePagina).getMolduraPagina();
-		MemoriaVirtual.getPagina(IndicePagina).setMolduraPagina(IndiceLivreHD);
-		MemoriaVirtual.getPagina(IndicePagina).setPresente(false);
-		valorRam = MemoriaFisica.getValor(IndiceRam);
-		MemoriaFisica.setValor(IndiceRam, null);
+		IndiceRam = MemoriaVirtual.getPagina(IndicePagina).getMolduraPagina();		//pegando a moldura da pagina
+		MemoriaVirtual.getPagina(IndicePagina).setMolduraPagina(IndiceLivreHD);		//apontando para o HD
+		MemoriaVirtual.getPagina(IndicePagina).setPresente(false);					//setando false(que ta no HD)
+		valorRam = MemoriaFisica.getValor(IndiceRam);								//pegando valor na ram
+		MemoriaFisica.setValor(IndiceRam, null);									//setando espaco da ram para null
 		HD.setValorHD(IndiceLivreHD, valorRam);
 		
-		System.out.println("A variavel que estava na posicao: "+ IndiceRam +  " na pagina " + IndicePagina + " foi para o HD na posicao oy" + IndiceLivreHD);
+		System.out.println("A pagina " + IndicePagina + " que tinha moduldura " + IndiceRam + " foi para o HD na posicao y" + IndiceLivreHD);
 	}
 	
 	
 	private void HDparaRAM(int indiceVirtual) {
 		Integer molduraHD, valorHD, indiceLivreRAM;
 
-		molduraHD = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina();
-		valorHD = HD.getValorHD(molduraHD);
-		HD.setValorHD(molduraHD, null);
+		molduraHD = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina();			//pegando valor da moldura que esta apontando para o HD
+		valorHD = HD.getValorHD(molduraHD);												//pegando valor que esta  no HD
+		HD.setValorHD(molduraHD, null);													//setando espaco do hd para null
 		
-		indiceLivreRAM = MemoriaFisica.getIndiceLivre();
+		indiceLivreRAM = MemoriaFisica.getIndiceLivre();								//COLOCANDO DE VOLTA NA RAM
 		MemoriaFisica.setValor(indiceLivreRAM, valorHD);
 		MemoriaVirtual.getPagina(indiceVirtual).setMolduraPagina(indiceLivreRAM);
 		MemoriaVirtual.getPagina(indiceVirtual).setPresente(true);
 		
+		System.out.println("A pagina " + indiceVirtual + " que tinha a moldura: y" + molduraHD + " agora foi para RAM em x" +indiceLivreRAM);
 	}
 
 }
