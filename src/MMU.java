@@ -41,7 +41,7 @@ public class MMU {
 			System.out.println(" A PAGINA JA EXISTA, FAZENDO UMA ATUALIZACAO");
 			
 			if(MemoriaVirtual.getPagina(indiceVirtual).isPresente()) {		//se a pagina ja esta na RAM
-				System.out.println("a variavel ja esta na Ram");
+				System.out.println("a variavel ja esta na RAM");
 				posicaoNaRam = MemoriaVirtual.getPagina(indiceVirtual).getMolduraPagina();	//pega a posicao q o valor esta na ram
 				MemoriaVirtual.getPagina(indiceVirtual).setModificada(true); 				//AINDA EXISTE DUVIDA AQUI,
 				MemoriaFisica.setValor(posicaoNaRam, escrita);
