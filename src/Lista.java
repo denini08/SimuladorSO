@@ -13,7 +13,7 @@ public class Lista {
 	}
 	
 	private void removerEle(Integer elemento) {  
-		ListaEncadeada.remove(elemento);
+		ListaEncadeada.remove(elemento); //Retira o elemento referenciado da lista
 	}
 	
 	public void mostrarTudoArray() {
